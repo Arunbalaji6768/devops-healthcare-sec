@@ -16,8 +16,8 @@ pipeline {
         stage('Security Scan (Trivy)') {
             steps {
                 echo "Scanning image for vulnerabilities..."
-                // This command runs a security scan and only shows high/critical bugs
-                bat "docker run --rm aquasec/trivy image --severity HIGH,CRITICAL ${APP_IMAGE}"
+        // We add -v //./pipe/docker_engine://./pipe/docker_engine to let Trivy talk to Windows Docker
+                 bat "docker run --rm -v //./pipe/docker_engine://./pipe/docker_engine aquasec/trivy image --severity HIGH,CRITICAL arunbalaji6768/healthcare-app:latest"
             }
         }
         stage('Push to Docker Hub') {
